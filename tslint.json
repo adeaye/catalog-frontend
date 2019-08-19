@@ -3,7 +3,7 @@
   "rules": {
     "object-literal-sort-keys": false,
     "ordered-imports": false,
-    "align": [true, "parameters", "arguments", "statements"],
+    "align": [true, "parameters", "statements"],
     "ban": false,
     "class-name": true,
     "max-classes-per-file": false,
@@ -43,6 +43,7 @@
     "no-debugger": true,
     "no-duplicate-variable": true,
     "no-empty": true,
+    "no-empty-interface": false,
     "no-eval": true,
     "no-shadowed-variable": true,
     "no-string-literal": true,
@@ -59,7 +60,7 @@
       "check-whitespace"
     ],
     "radix": true,
-    "semicolon": [true, "always"],
+    "semicolon": [true, "always", "ignore-bound-class-methods"],
     "switch-default": true,
 
     "trailing-comma": [false],

@@ -1,12 +1,33 @@
 import * as React from "react";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import TopMenu from './components/TopMenu';
+const Catalog = React.lazy(() => import("./container/catalog/CatalogPage"));
+const CatalogDetail = React.lazy(() => import("./container/catalog/CatalogDetailPage"));
 
-class App extends React.Component {
+class Merchant extends React.Component<any, any> {
   public render() {
     return (
-      <React.Fragment>
-        <h1>Hallo Dunia</h1>
-      </React.Fragment>
+        <React.Fragment>
+          <BrowserRouter>
+            <React.Fragment>
+            <TopMenu/>
+            <React.Suspense fallback={<p>Please wait...</p>}>
+            <Switch>
+              <Route path="/" exact={true} render={() => (
+                <Redirect to={'/catalog'} />
+              )} />
+              <Route path="/catalog" exact={true} component={Catalog} />
+              <Route path="/catalog/:productId" exact={true} component={CatalogDetail} />
+              <Route render={() => (
+                <h3>PAGE NOT FOUND</h3>
+              )} />
+            </Switch>
+            </React.Suspense>
+            </React.Fragment>
+          </BrowserRouter>
+        </React.Fragment>
     );
   }
+}
 
-export default App;
+export default Merchant;
