@@ -1,8 +1,9 @@
 import * as React from "react";
-import { Card, Icon, Label, Button } from "semantic-ui-react";
+import { Card, Icon, Label, Button, Responsive } from "semantic-ui-react";
 import { Product } from "../CatalogInterfaces";
 import Flex from "src/components/Flex";
 import ImageLoad from "src/components/ImageLoad";
+import Spacer from 'src/components/Spacer';
 
 interface Props {
   product: Product;
@@ -26,10 +27,13 @@ class CatalogCard extends React.PureComponent<Props, any> {
             <Card.Header style={{ fontSize: "20px" }}>
               {product.name}
             </Card.Header>
-            <Button basic={true} color={"red"}>
-              <strong>Beli</strong>
-            </Button>
+            <Responsive minWidth={768}>
+              <Button basic={true} color={"red"}>
+                <strong>Beli</strong>
+              </Button>
+            </Responsive>
           </Flex>
+          <Spacer height={5}/>
           <Card.Meta>
             <span className="date">
               Size <Label size={"tiny"}>{product.detail.size}</Label>{" "}
@@ -43,6 +47,12 @@ class CatalogCard extends React.PureComponent<Props, any> {
               </span>
             </Flex>
           </Card.Description>
+          <Responsive maxWidth={767}>
+              <Button basic={true} color={"red"} floated={'right'}>
+                <strong>Beli</strong>
+              </Button>
+              <div style={{clear: 'both'}} />
+            </Responsive>
         </Card.Content>
         <Card.Content extra={true}>
           <Flex justifyContent={"space-between"}>
