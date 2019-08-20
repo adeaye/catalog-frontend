@@ -37,6 +37,12 @@ class CatalogPage extends React.Component<Props, any> {
     const { history } = this.props;
     history.push(`catalog/${productId}`);
   };
+  shouldComponentUpdate(nextProps: any, nextState: any) {
+    if (nextProps.byIds === this.props.byIds) {
+      return false;
+    }
+    return true;
+  }
   render() {
     const { isLoading, page, totalPages, byIds, entities } = this.props;
     return (
