@@ -1,17 +1,25 @@
 import * as React from "react";
-import { Card, Icon, Label, Button, Container, Grid } from "semantic-ui-react";
+import { Container, Grid } from "semantic-ui-react";
 import { Product } from "./CatalogInterfaces";
-import Flex from "src/components/Flex";
-import ImageLoad from "src/components/ImageLoad";
-import { fetchProduct } from "./CatalogActions";
+import { fetchProduct, clearProduct } from "./CatalogActions";
 import { connect } from "react-redux";
 import { RouteComponentProps } from "react-router";
-const CatalogDetailModal = React.lazy(() => import("./components/CatalogDetailModal"));
+import CatalogCard from "./components/CatalogCard";
+import CardLoader from "src/components/CardLoader";
+import CatalogDetailDescription from "./components/CatalogDetailDescription";
+import Spacer from 'src/components/Spacer';
+import CatalogDetailTestimonial from './components/CatalogDetailTestimonial';
+import CardDescriptionLoader from 'src/components/CardDescriptionLoader';
+import CardTestimonialLoader from 'src/components/CardTestimonialLoader';
+const CatalogDetailModal = React.lazy(() =>
+  import("./components/CatalogDetailModal")
+);
 
 interface Props extends RouteComponentProps<any> {
   isLoading: boolean;
   product: Product;
   dispatchFetchProduct(productId: number): any;
+  dispatchClearProduct(): any;
 }
 
 class CatalogDetailPage extends React.PureComponent<Props, any> {
@@ -31,69 +39,49 @@ class CatalogDetailPage extends React.PureComponent<Props, any> {
       isModalOpen: !this.state.isModalOpen
     });
   };
+  componentWillUnmount() {
+    this.props.dispatchClearProduct();
+  }
   render() {
     const { product } = this.props;
     const { isModalOpen } = this.state;
     return (
       <Container style={{ paddingTop: "65px" }}>
-        <Grid centered={true} columns={2}>
+        <Grid>
           <Grid.Column>
             {product ? (
-              <Card fluid={true}>
-                <ImageLoad
-                  customStyle={{ cursor: "pointer" }}
-                  url={product.photos[0].url}
+              <React.Fragment>
+                <CatalogCard
                   onClick={this.toggleModal}
+                  product={product}
+                  style={{ margin: "auto", width: "450px" }}
                 />
-                <Card.Content>
-                  <Flex justifyContent={"space-between"}>
-                    <Card.Header style={{ fontSize: "20px" }}>
-                      {product.name}
-                    </Card.Header>
-                    <Button>Beli</Button>
-                  </Flex>
-                  <Card.Meta>
-                    <span className="date">
-                      Size <Label size={"tiny"}>{product.detail.size}</Label>{" "}
-                    </span>
-                  </Card.Meta>
-                  <Card.Description>
-                    <Flex justifyContent={"space-between"}>
-                      <p>Color {product.detail.color}</p>
-                      <span style={{ fontWeight: "bold", fontSize: "18px" }}>
-                        Rp {product.detail.normalPrice.toLocaleString("de-DE")}
-                      </span>
-                    </Flex>
-                  </Card.Description>
-                </Card.Content>
-                <Card.Content extra={true}>
-                  <Flex justifyContent={"space-between"}>
-                    <a>
-                      <Icon name="heart" />
-                      23 orang suka
-                    </a>
-
-                    {product.detail.stock < 5 && (
-                      <span>
-                        <Icon name="fire" color={"red"} />
-                        Tersisa {product.detail.stock}
-                      </span>
-                    )}
-                  </Flex>
-                </Card.Content>
-              </Card>
+                <Spacer height={20}/>
+                <CatalogDetailDescription
+                  style={{ width: "450px", margin: "auto" }}
+                  text={product.detail.description}
+                />
+                <Spacer height={20} />
+                <CatalogDetailTestimonial style={{ width: "450px", margin: "auto" }}/>
+              </React.Fragment>
             ) : (
-              "Loading"
+              <React.Fragment>
+                <CardLoader style={{ width: "450px", margin: "auto" }} />
+                <Spacer height={20}/>
+                <CardDescriptionLoader style={{ width: "450px", margin: "auto" }}/>
+                <Spacer height={20}/>
+                <CardTestimonialLoader style={{ width: "450px", margin: "auto" }}/>
+              </React.Fragment>
             )}
           </Grid.Column>
         </Grid>
         {isModalOpen && (
           <React.Suspense fallback={<p>Opening modal...</p>}>
             <CatalogDetailModal
-            imageUrl={product.photos[0].url}
-            isOpen={true}
-            onClose={this.toggleModal}
-          />
+              imageUrl={product.photos[0].url}
+              isOpen={true}
+              onClose={this.toggleModal}
+            />
           </React.Suspense>
         )}
       </Container>
@@ -108,7 +96,8 @@ const MSTP = (state: any) => {
 };
 
 const MDTP = {
-  dispatchFetchProduct: fetchProduct
+  dispatchFetchProduct: fetchProduct,
+  dispatchClearProduct: clearProduct
 };
 
 export default connect(
