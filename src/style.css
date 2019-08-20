@@ -15,3 +15,55 @@ html, body {
 h1, h2, h3, h4, h5, h6, p {
   font-family: 'Roboto';
 }
+
+.loading--box {
+  animation: pulse 1s infinite ease-in-out;
+}
+
+.loading--line {
+  height: 15px;
+  margin: 5px 0;
+  animation: pulse 1s infinite ease-in-out;
+}
+.loading--width10 {
+  width: 10%;
+}
+.loading--width20 {
+  width: 20%;
+}
+.loading--width30 {
+  width: 30%;
+}
+.loading--width40 {
+  width: 40%;
+}
+.loading--width50 {
+  width: 50%;
+}
+.loading--width60 {
+  width: 60%;
+}
+.loading--width70 {
+  width: 70%;
+}
+.loading--width80 {
+  width: 80%;
+}
+.loading--width90 {
+  width: 90%;
+}
+.loading--width100 {
+  width: 100%;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: rgba(165, 165, 165, 0.1);
+  }
+  50% {
+    background-color: rgba(165, 165, 165, 0.3);
+  }
+  100% {
+    background-color: rgba(165, 165, 165, 0.1);
+  }
+}
