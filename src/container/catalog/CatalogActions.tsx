@@ -73,3 +73,9 @@ export function fetchProduct(productId: number) {
 
   };
 }
+
+export function clearProduct() {
+  return {
+    type: types.CLEAR_PRODUCT
+  };
+}

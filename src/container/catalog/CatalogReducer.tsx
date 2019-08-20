@@ -1,27 +1,30 @@
 import { CatalogReducerState, Product } from "./CatalogInterfaces";
-import * as types from './CatalogTypes';
-import { camelizeKeys } from 'humps';
+import * as types from "./CatalogTypes";
+import { camelizeKeys } from "humps";
 
 const initialState: CatalogReducerState = {
   isLoading: false,
   byIds: [],
-  entities: {},
+  entities: null,
   entity: null,
   page: null,
   itemsPerPage: null,
-  totalPages: null,
+  totalPages: null
 };
 
 const insertEntities = (currentEntities: any, payload: Array<Product>) => {
   const hashed = payload.reduce((acc, obj) => {
     acc[obj.id] = camelizeKeys(obj);
     return acc;
-}, {}); //tslint:disable-line
+  }, {});
 
-  return {...currentEntities, ...hashed};
+  return { ...currentEntities, ...hashed };
 };
 
-const insertIds = (currentIds: Array<number>, additionalData: Array<Product>) => {
+const insertIds = (
+  currentIds: Array<number>,
+  additionalData: Array<Product>
+) => {
   const additional = additionalData.map(catalogProduct => catalogProduct.id);
 
   return [...currentIds, ...additional];
@@ -33,7 +36,7 @@ const catalog = (state: CatalogReducerState = initialState, action: any) => {
     case types.GET_PRODUCT_BEGIN:
       return {
         ...state,
-        isLoading: true,
+        isLoading: true
       };
     case types.GET_PRODUCTS_SUCCESS:
       return {
@@ -48,17 +51,22 @@ const catalog = (state: CatalogReducerState = initialState, action: any) => {
     case types.GET_PRODUCT_SUCCESS:
       return {
         ...state,
-        entity: camelizeKeys(action.payload),
+        entity: camelizeKeys(action.payload)
       };
     case types.GET_PRODUCTS_ERROR:
     case types.GET_PRODUCT_ERROR:
-      return{
+      return {
         ...state,
-        isLoading: false,
+        isLoading: false
+      };
+    case types.CLEAR_PRODUCT:
+      return {
+        ...state,
+        entity: null
       };
     default:
       return {
-        ...state,
+        ...state
       };
   }
 };
