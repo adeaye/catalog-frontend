@@ -3,8 +3,9 @@ import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import TopMenu from './components/TopMenu';
 const Catalog = React.lazy(() => import("./container/catalog/CatalogPage"));
 const CatalogDetail = React.lazy(() => import("./container/catalog/CatalogDetailPage"));
+const NotFound = React.lazy(() => import('./container/NotFound'));
 
-class Merchant extends React.Component<any, any> {
+class App extends React.Component<any, any> {
   public render() {
     return (
         <React.Fragment>
@@ -18,9 +19,7 @@ class Merchant extends React.Component<any, any> {
               )} />
               <Route path="/catalog" exact={true} component={Catalog} />
               <Route path="/catalog/:productId" exact={true} component={CatalogDetail} />
-              <Route render={() => (
-                <h3>PAGE NOT FOUND</h3>
-              )} />
+              <Route component={NotFound} />
             </Switch>
             </React.Suspense>
             </React.Fragment>
@@ -30,4 +29,4 @@ class Merchant extends React.Component<any, any> {
   }
 }
 
-export default Merchant;
+export default App;
