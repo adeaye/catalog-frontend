@@ -3,12 +3,13 @@ import { FixedSizeList as List } from "react-window";
 import InfiniteLoader from "react-window-infinite-loader";
 import AutoSizer from "react-virtualized-auto-sizer";
 import CatalogCard from "./CatalogCard";
+import { Entities } from '../CatalogInterfaces';
 
 interface Props {
   hasNextPage: boolean;
   isNextPageLoading: boolean;
   itemIds: Array<number>;
-  items: any;
+  items: Entities;
   loadNextPage(): any;
   goToDetail(productId: number): any;
 }

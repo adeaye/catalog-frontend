@@ -1,7 +1,7 @@
 import * as React from "react";
 import { fetchProducts } from "./CatalogActions";
 import { connect } from "react-redux";
-import { ProductRequestUriParams } from "./CatalogInterfaces";
+import { ProductRequestUriParams, Entities } from "./CatalogInterfaces";
 import { Grid, Container } from "semantic-ui-react";
 import CardWrapper from "./components/CardWrapper";
 import { RouteComponentProps } from "react-router";
@@ -11,7 +11,7 @@ import Spacer from "src/components/Spacer";
 interface Props extends RouteComponentProps<any> {
   isLoading: boolean;
   page: number;
-  entities: any;
+  entities: Entities;
   byIds: Array<number>;
   itemsPerPage: number;
   totalPages: number;

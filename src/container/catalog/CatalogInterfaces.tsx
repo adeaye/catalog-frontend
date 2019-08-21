@@ -40,9 +40,13 @@ export interface ProductRequestUriParams {
 export interface CatalogReducerState {
   isLoading: boolean;
   byIds: Array<number>;
-  entities: any;
+  entities: Entities;
   entity: Product;
   page: number;
   totalPages: number;
   itemsPerPage: number;
+}
+
+export interface Entities {
+  [key: number]: Product;
 }
